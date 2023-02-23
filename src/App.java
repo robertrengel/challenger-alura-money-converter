@@ -1,38 +1,30 @@
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.plaf.DimensionUIResource;
-import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        //List<String> list = Arrays.asList("Opcion 1", "Opcion 2", "Opcion 3", "Opcion 4", "Opcion 5");
-        //String nombre = JOptionPane.showInputDialog(null, "Por favor, ingrese su nombre:");
-        //JOptionPane.showInputDialog(null, args, nombre, 0);
-        //JOptionPane.showInputDialog(null, list, "Lista de opciones", 0);
-        //JOptionPane.showMessageDialog(null, "Hola, esto es un mensaje de prueba.");
-        //JOptionPane.showOptionDialog(null, "Hola, esto es un mensaje de prueba.", "Mensaje de prueba", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
-        JFrame frame = new JFrame("Ejemplo JComboBox");
-        JPanel panel = new JPanel();
-        JLabel textField = new JLabel("Escoja una opcion");
+        PrincipalWindow menuInicio = new PrincipalWindow(350, 140, "Menu Inicio");
+        PanelPrincipal panelPrincipal = new PanelPrincipal(350, 110);
+        PanelSelection panelSelection = new PanelSelection();
+        PanelButtons panelButtons = new PanelButtons();
 
-        String[] opciones = {"Opción 1", "Opción 2", "Opción 3", "Opción 4", "Opción 5"};
-        JComboBox<String> comboBox = new JComboBox<>(opciones);
-
+        panelPrincipal.add(panelSelection);
+        panelPrincipal.add(panelButtons);
+        menuInicio.add(panelPrincipal);
+        menuInicio.setVisible(true);
         
-        panel.setPreferredSize(new Dimension(400, 300));
-        //frame.setSize(400, 300);
-        panel.add(textField);
-        panel.add(comboBox);
-        frame.add(panel);
-        frame.pack();
-        frame.setVisible(true);
+        panelButtons.getButtonSeleccionar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obtiene la opción seleccionada en el JComboBox
+                String opcionSeleccionada = (String) panelSelection.getComboBox().getSelectedItem();
+                System.out.println();
+                System.out.println("La opcion seleccionada es: " + opcionSeleccionada);
+                
+            }
+        });
+        
     }
+
 }
