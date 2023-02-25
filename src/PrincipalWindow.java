@@ -1,14 +1,17 @@
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PrincipalWindow extends JFrame {
+    Units[] units = Units.values();
+    String[] unit = { units[0].getName(), units[1].getName(), units[2].getName() };
 
     public PrincipalWindow() {
         setTitle("Menu Inicio");
@@ -43,8 +46,16 @@ public class PrincipalWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String opcionSeleccionada = (String) comboBox.getSelectedItem();
-                MoneyConverter moneyConverter = new MoneyConverter(PrincipalWindow.this);
-                moneyConverter.setVisible(true);
+                if (opcionSeleccionada.equals("Convertidor de temperatura")) {
+                    Converter convertidorDeTemperatura = new Converter(PrincipalWindow.this,
+                            "Convertidor de temperatura", "Convertidor de temperatura", unit, unit);
+                    convertidorDeTemperatura.setVisible(true);
+                } else if (opcionSeleccionada.equals("Convertidor de monedas")) {
+                    Converter moneyConverter = new Converter(PrincipalWindow.this, "Convertidor de monedas",
+                            "Ingrese monto a convertir", new String[] { "USD", "SOL" }, new String[] { "SOL", "USD" });
+                    moneyConverter.setVisible(true);
+
+                }
                 PrincipalWindow.this.setVisible(false);
             }
         });

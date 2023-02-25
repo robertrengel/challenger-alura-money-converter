@@ -1,26 +1,31 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class MoneyConverter extends JFrame {
+public class Converter extends JFrame {
 
-    public MoneyConverter(PrincipalWindow principalWindow) {
-        setTitle("Convertidor de monedas");
+    public Converter(PrincipalWindow principalWindow, String title, String labelTitle, String[] listValuesComboBox,
+            String[] listValuesComboBox2) {
+        setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(350, 440);
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
 
-        JLabel label = new JLabel("Ingrese cantidad de monedas a convertir");
+        JLabel label = new JLabel(labelTitle);
         JPanel principalPanel = new JPanel();
         JPanel labelPanel = new JPanel();
         JPanel comboBoxPanel1 = new JPanel();
@@ -29,18 +34,17 @@ public class MoneyConverter extends JFrame {
         JPanel converterButtonPanel = new JPanel();
         JPanel cancelButtonPanel = new JPanel();
         JPanel resultPanel = new JPanel();
-        JTextField textField = new JTextField();
+        JFormattedTextField textField = new JFormattedTextField(NumberFormat.getInstance(Locale.getDefault()));
         JTextField resultTextField = new JTextField();
-        JComboBox<String> comboBox = new JComboBox<String>(
-                new String[] { "USD / Dolar Americano", "SOL / Sol Peruano" });
-        JComboBox<String> comboBox2 = new JComboBox<String>(
-                new String[] { "SOL / Sol Peruano", "USD / Dolar Americano" });
+        JComboBox<String> comboBox = new JComboBox<String>(listValuesComboBox);
+        JComboBox<String> comboBox2 = new JComboBox<String>(listValuesComboBox2);
         JButton buttonConvertir = new JButton("Convertir");
         JButton buttonCancelar = new JButton("Cancelar");
-        
+
         label.setHorizontalAlignment(JLabel.LEFT);
         textField.setFont(getFont().deriveFont(20.0f));
         resultTextField.setEditable(false);
+        // textField.setValue(0.0);
 
         comboBox.setFont(getFont().deriveFont(20.0f));
         comboBox2.setFont(getFont().deriveFont(20.0f));
@@ -92,15 +96,27 @@ public class MoneyConverter extends JFrame {
 
         add(principalPanel);
 
+        buttonConvertir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String opcionSeleccionada = (String) comboBox.getSelectedItem();
+                String opcionSeleccionada2 = (String) comboBox2.getSelectedItem();
+                double texto = Double.parseDouble(textField.getText());
+                Temperature temp = new Temperature(texto, opcionSeleccionada, opcionSeleccionada2);
+                String resultado = "" + temp.getInputResolved();
+                resultTextField.setText(resultado);
+                //System.out.println(textField.getText());
+            }
+        });
+
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MoneyConverter.this.dispose();
+                Converter.this.dispose();
                 principalWindow.setVisible(true);
             }
         });
 
     }
 
-    
 }
