@@ -3,18 +3,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Converter extends JFrame {
+    String regex = "\\d+(\\.\\d+)?";
+    double textoNumero;
 
     public Converter(PrincipalWindow principalWindow, String title, String labelTitle, String[] listValuesComboBox,
             String[] listValuesComboBox2) {
@@ -34,17 +35,21 @@ public class Converter extends JFrame {
         JPanel converterButtonPanel = new JPanel();
         JPanel cancelButtonPanel = new JPanel();
         JPanel resultPanel = new JPanel();
-        JFormattedTextField textField = new JFormattedTextField(NumberFormat.getInstance(Locale.getDefault()));
+        JTextField textField = new JTextField();
         JTextField resultTextField = new JTextField();
         JComboBox<String> comboBox = new JComboBox<String>(listValuesComboBox);
         JComboBox<String> comboBox2 = new JComboBox<String>(listValuesComboBox2);
         JButton buttonConvertir = new JButton("Convertir");
         JButton buttonCancelar = new JButton("Cancelar");
+        Temperature temp = new Temperature();
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        df.setRoundingMode(RoundingMode.CEILING);
 
         label.setHorizontalAlignment(JLabel.LEFT);
         textField.setFont(getFont().deriveFont(20.0f));
         resultTextField.setEditable(false);
-        // textField.setValue(0.0);
+        textField.setText("0");
 
         comboBox.setFont(getFont().deriveFont(20.0f));
         comboBox2.setFont(getFont().deriveFont(20.0f));
@@ -101,11 +106,24 @@ public class Converter extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String opcionSeleccionada = (String) comboBox.getSelectedItem();
                 String opcionSeleccionada2 = (String) comboBox2.getSelectedItem();
-                double texto = Double.parseDouble(textField.getText());
-                Temperature temp = new Temperature(texto, opcionSeleccionada, opcionSeleccionada2);
-                String resultado = "" + temp.getInputResolved();
-                resultTextField.setText(resultado);
-                //System.out.println(textField.getText());
+                String texto = textField.getText();
+                System.out.println(title);
+
+                if (title.equals("Convertidor de temperatura")) {
+
+                    if (texto.matches(regex)) {
+                        textoNumero = Double.parseDouble(texto.replace(",", ""));
+                    } else {
+                        ErrorWindow errorWindow = new ErrorWindow("Error", "El valor ingresado no es un número válido");
+                        errorWindow.setVisible(true);
+                    }
+                    temp.setCalculateTemperature(textoNumero, opcionSeleccionada, opcionSeleccionada2);
+                    double resultadoNumero = (temp.getInputResolved());
+                    String resultado = "" + df.format(resultadoNumero);
+                    resultTextField.setText(resultado);
+                    temp.setInputResolved(0.0);
+                }
+
             }
         });
 
