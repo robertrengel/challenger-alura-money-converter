@@ -1,11 +1,11 @@
-public enum Units {
+public enum UnitsList {
     CELSIUS("Celsius"),
     FAHRENHEIT("Fahrenheit"),
     KELVIN("Kelvin");
     
     private String unit;
 
-    private Units(String name) {
+    private UnitsList(String name) {
         this.unit = name;
     }
 

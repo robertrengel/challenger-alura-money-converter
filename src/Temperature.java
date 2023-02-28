@@ -1,7 +1,7 @@
 public class Temperature {
     private double inputResolved;
 
-    Units[] units = Units.values();
+    UnitsList[] units = UnitsList.values();
 
     public void setCalculateTemperature(double inputValue, String unit1, String unit2) {
         if (unit1.equals(units[0].getName())) {

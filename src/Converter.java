@@ -16,8 +16,9 @@ import javax.swing.JTextField;
 public class Converter extends JFrame {
     String regex = "\\d+(\\.\\d+)?";
     double textoNumero;
+    MoneyList[] money = MoneyList.values();
 
-    public Converter(PrincipalWindow principalWindow, String title, String labelTitle, String[] listValuesComboBox,
+    public Converter(JFrame ventanaPrincipal, String title, String labelTitle, String[] listValuesComboBox,
             String[] listValuesComboBox2) {
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,8 +42,9 @@ public class Converter extends JFrame {
         JComboBox<String> comboBox2 = new JComboBox<String>(listValuesComboBox2);
         JButton buttonConvertir = new JButton("Convertir");
         JButton buttonCancelar = new JButton("Cancelar");
-        Temperature temp = new Temperature();
         DecimalFormat df = new DecimalFormat("#.##");
+        Temperature temp = new Temperature();
+        Api call_api = new Api();
 
         df.setRoundingMode(RoundingMode.CEILING);
 
@@ -106,32 +108,58 @@ public class Converter extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String opcionSeleccionada = (String) comboBox.getSelectedItem();
                 String opcionSeleccionada2 = (String) comboBox2.getSelectedItem();
+                int indexOpcionSeleccionada = comboBox.getSelectedIndex();
+                int indexOpcionSeleccionada2 = comboBox2.getSelectedIndex();
                 String texto = textField.getText();
                 System.out.println(title);
 
-                if (title.equals("Convertidor de temperatura")) {
+                
 
-                    if (texto.matches(regex)) {
+                if (texto.matches(regex)) {
+
+                    if (title.equals("Convertidor de temperatura")) {
                         textoNumero = Double.parseDouble(texto.replace(",", ""));
-                    } else {
-                        ErrorWindow errorWindow = new ErrorWindow("Error", "El valor ingresado no es un número válido");
-                        errorWindow.setVisible(true);
+                        temp.setCalculateTemperature(textoNumero, opcionSeleccionada, opcionSeleccionada2);
+                        double resultadoNumero = (temp.getInputResolved());
+                        String resultado = "" + df.format(resultadoNumero);
+                        resultTextField.setText(resultado);
+                        temp.setInputResolved(0.0);
                     }
-                    temp.setCalculateTemperature(textoNumero, opcionSeleccionada, opcionSeleccionada2);
-                    double resultadoNumero = (temp.getInputResolved());
-                    String resultado = "" + df.format(resultadoNumero);
-                    resultTextField.setText(resultado);
-                    temp.setInputResolved(0.0);
-                }
 
-            }
-        });
+                    else if (title.equals("Convertidor de monedas")) {
+
+                        call_api.setConverter_de(money[indexOpcionSeleccionada].getReference());
+                        call_api.setConverter_a(money[indexOpcionSeleccionada2].getReference());
+                        call_api.CallApi();
+                        String resulDivisa = call_api.getDivisa_value();
+                        //TODO: COnvertir resultado de la api a un numero para poder multiplicar y mostrar resultado
+                        resultTextField.setText(resulDivisa);
+                        System.out.println(call_api.getDivisa_value());
+                        
+                    }
+
+
+                    
+                } else {
+                    ErrorWindow errorWindow = new ErrorWindow("Error", "El valor ingresado no es un número válido");
+                    errorWindow.setVisible(true);
+                }
+                
+                
+
+
+
+                
+
+            
+        }});
 
         buttonCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            
                 Converter.this.dispose();
-                principalWindow.setVisible(true);
+                ventanaPrincipal.setVisible(true);
             }
         });
 
