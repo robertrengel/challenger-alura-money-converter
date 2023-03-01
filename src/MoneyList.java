@@ -1,9 +1,11 @@
+// A Java Enum.
 public enum MoneyList {
+    PEN("Sol Peruano", "pen"),
     USD("Dolar Estado Unidense", "usd"),
     EUR("Euro", "eur"),
     JPY("Yen Japones", "jpy"),
-    PEN("Sol Peruano", "pen"),
-    GBP("Libra Esterlina", "gbp");
+    GBP("Libra Esterlina", "gbp"),
+    KRW("Won Sur Coreano", "krw");
 
     private final String name;
     private final String reference;
