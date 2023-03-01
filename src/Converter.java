@@ -132,6 +132,7 @@ public class Converter extends JFrame {
                         call_api.setConverter_a(money[indexOpcionSeleccionada2].getReference());
                         call_api.CallApi();
                         String resulDivisa = call_api.getDivisa_value();
+                        
                         //TODO: COnvertir resultado de la api a un numero para poder multiplicar y mostrar resultado
                         resultTextField.setText(resulDivisa);
                         System.out.println(call_api.getDivisa_value());
