@@ -22,14 +22,18 @@ public class Converter extends JFrame {
             String[] listValuesComboBox2) {
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(350, 440);
+        setSize(350, 480);
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
 
         JLabel label = new JLabel(labelTitle);
+        JLabel converterDe = new JLabel("Convertir de:");
+        JLabel converterTo = new JLabel("Convertir a:");
         JPanel principalPanel = new JPanel();
         JPanel labelPanel = new JPanel();
+        JPanel labelConverterDe = new JPanel();
+        JPanel labelConverterTo = new JPanel();
         JPanel comboBoxPanel1 = new JPanel();
         JPanel comboBoxPanel2 = new JPanel();
         JPanel textFieldPanel = new JPanel();
@@ -42,7 +46,7 @@ public class Converter extends JFrame {
         JComboBox<String> comboBox2 = new JComboBox<String>(listValuesComboBox2);
         JButton buttonConvertir = new JButton("Convertir");
         JButton buttonCancelar = new JButton("Cancelar");
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.###");
         Temperature temp = new Temperature();
         Api call_api = new Api();
 
@@ -70,6 +74,14 @@ public class Converter extends JFrame {
         labelPanel.setLayout(new BorderLayout());
         labelPanel.add(label, BorderLayout.WEST);
 
+        labelConverterDe.setPreferredSize(new Dimension(300, 30));
+        labelConverterDe.setLayout(new BorderLayout());
+        labelConverterDe.add(converterDe, BorderLayout.WEST);
+
+        labelConverterTo.setPreferredSize(new Dimension(300, 30));
+        labelConverterTo.setLayout(new BorderLayout());
+        labelConverterTo.add(converterTo, BorderLayout.WEST);
+
         comboBoxPanel1.setPreferredSize(new Dimension(300, 40));
         comboBoxPanel1.setLayout(new BorderLayout());
         comboBoxPanel1.add(comboBox);
@@ -91,8 +103,10 @@ public class Converter extends JFrame {
         principalPanel.add(labelPanel);
         principalPanel.add(textFieldPanel);
         principalPanel.add(new Espacio());
+        principalPanel.add(labelConverterDe);
         principalPanel.add(comboBoxPanel1);
         principalPanel.add(new Espacio());
+        principalPanel.add(labelConverterTo);
         principalPanel.add(comboBoxPanel2);
         principalPanel.add(new Espacio());
         principalPanel.add(resultPanel);
@@ -112,13 +126,13 @@ public class Converter extends JFrame {
                 int indexOpcionSeleccionada2 = comboBox2.getSelectedIndex();
                 String texto = textField.getText();
                 System.out.println(title);
+                textoNumero = Double.parseDouble(texto.replace(",", ""));
 
                 
 
                 if (texto.matches(regex)) {
 
                     if (title.equals("Convertidor de temperatura")) {
-                        textoNumero = Double.parseDouble(texto.replace(",", ""));
                         temp.setCalculateTemperature(textoNumero, opcionSeleccionada, opcionSeleccionada2);
                         double resultadoNumero = (temp.getInputResolved());
                         String resultado = "" + df.format(resultadoNumero);
@@ -131,10 +145,11 @@ public class Converter extends JFrame {
                         call_api.setConverter_de(money[indexOpcionSeleccionada].getReference());
                         call_api.setConverter_a(money[indexOpcionSeleccionada2].getReference());
                         call_api.CallApi();
-                        String resulDivisa = call_api.getDivisa_value();
-                        
+                        double resulDivisa = call_api.getDivisa_value() * textoNumero;
+                        String resultadoDivisa = "" + df.format(resulDivisa);
+
                         //TODO: COnvertir resultado de la api a un numero para poder multiplicar y mostrar resultado
-                        resultTextField.setText(resulDivisa);
+                        resultTextField.setText(resultadoDivisa);
                         System.out.println(call_api.getDivisa_value());
                         
                     }

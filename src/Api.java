@@ -2,12 +2,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import org.json.JSONObject; 
 
 
 //import netscape.javascript.JSObject;
 
 public class Api {
-    private String divisa_value;
+    private double divisa_value;
     private String converter_de;
     private String converter_a;
 
@@ -26,8 +27,11 @@ public class Api {
 
             // Imprime la respuesta de la API
             //System.out.println(httpResponse.body());
+            JSONObject jsonObject = new JSONObject(httpResponse.body());
 
-            setDivisa_value(httpResponse.body());
+            
+
+            setDivisa_value(jsonObject.getDouble(this.converter_a));
             //divisa_value = httpResponse.body();
         } catch (Exception e) {
             System.out.println("Error al llamar a la API: " + e.getMessage());
@@ -35,13 +39,13 @@ public class Api {
     }
 
     
-    public String setDivisa_value(String divisa_value) {
+    public double setDivisa_value(double divisa_value) {
         this.divisa_value = divisa_value;
         return divisa_value;
     }
 
 
-    public String getDivisa_value() {
+    public double getDivisa_value() {
         return divisa_value;
     }
 
