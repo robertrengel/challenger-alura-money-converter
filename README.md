@@ -47,7 +47,7 @@ Menu de inicio para seleccionar el tipo de convertidor
 
 ## 🔗 Links de autor
 
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/robert-jose-asdrubal-rengel-osorio)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/robert-jose-asdrubal-rengel-osorio/)
 
 
 
