@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ErrorWindow extends JFrame {
-    public ErrorWindow(String title, String message) {
+    public ErrorWindow(Converter converter, String title, String message) {
         JFrame frame = new JFrame(title);
         JPanel panel = new JPanel();
         JLabel label = new JLabel(message);
@@ -33,6 +33,7 @@ public class ErrorWindow extends JFrame {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
+        converter.setEnabled(false);;
 
      // Adding an action listener to the button. When the button is clicked, the action listener will
      // dispose of the frame and the ErrorWindow object.
@@ -40,7 +41,7 @@ public class ErrorWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                ;
+                converter.setEnabled(true);
                 ErrorWindow.this.dispose();
             }
         });

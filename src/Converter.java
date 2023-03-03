@@ -141,9 +141,9 @@ public class Converter extends JFrame {
                 int indexOpcionSeleccionada2 = comboBox2.getSelectedIndex();
                 String texto = textField.getText();
                 System.out.println(title);
-                textoNumero = Double.parseDouble(texto.replace(",", ""));
-
+                
                 if (texto.matches(regex)) {
+                    textoNumero = Double.parseDouble(texto.replace(",", ""));
 
                     // Checking if the title of the window is "Convertidor de temperatura" and if it
                     // is, it is calling the method setCalculateTemperature from the class Temperature.
@@ -161,7 +161,7 @@ public class Converter extends JFrame {
                     else if (title.equals("Convertidor de monedas")) {
                         call_api.setConverter_de(money[indexOpcionSeleccionada].getReference());
                         call_api.setConverter_a(money[indexOpcionSeleccionada2].getReference());
-                        call_api.CallApi();
+                        call_api.CallApi(Converter.this);
                         double resulDivisa = call_api.getDivisa_value() * textoNumero;
                         String resultadoDivisa = "" + df.format(resulDivisa);
                         resultTextField.setText(resultadoDivisa);
@@ -171,7 +171,7 @@ public class Converter extends JFrame {
                 // Creating a new window with the title "Error" and the message "El valor ingresado no
                 // es un número válido" and setting it to visible.
                 } else {
-                    ErrorWindow errorWindow = new ErrorWindow("Error", "El valor ingresado no es un número válido");
+                    ErrorWindow errorWindow = new ErrorWindow(Converter.this,"Error", "El valor ingresado no es un número válido");
                     errorWindow.setVisible(true);
                 }
 

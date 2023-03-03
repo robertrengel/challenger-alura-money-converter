@@ -16,7 +16,7 @@ public class Api {
     /**
      * It calls an API and gets the value of a currency
      */
-    public void CallApi() {
+    public void CallApi(Converter converter) {
 
         try {
             HttpClient httpClient = HttpClient.newHttpClient();
@@ -32,7 +32,7 @@ public class Api {
 
         } catch (Exception e) {
             System.out.println("Error al llamar a la API: " + e.getMessage());
-            ErrorWindow errorWindow = new ErrorWindow("Error", "Error de conexion. Intente nuevamente.");
+            ErrorWindow errorWindow = new ErrorWindow(converter,"Error", "Error de conexion. Intente nuevamente.");
             errorWindow.setVisible(true);
         }
     }
