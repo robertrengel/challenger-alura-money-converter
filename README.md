@@ -1,18 +1,41 @@
-## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+# Convertidor de monedas y temperatura
 
-## Folder Structure
+Convertidor de monedas y  temperatura con las siguientes caracteristicas
 
-The workspace contains two folders by default, where:
+![App Screenshot](demo_img/conversor2.jpg)
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Caracteristicas convertidor de monedas
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+- Convierte entre Dólar Americano, Sol Peruano, Libra Esterlina, Yen Japones y Won Sur-coreano 
 
-## Dependency Management
+![App Screenshot](demo_img/conversor%20moneda%20ejemplo.jpg)
+![App Screenshot](demo_img/conversor%20moneda%20ejemplo%203.jpg)
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- Los datos para conversion de monedas son recibidos desde la API.
+  - https://github.com/fawazahmed0/currency-api#readme
+
+
+
+## Caracteristicas convertidor de temperatura
+
+- Convierte entre grados Celcius, Fahrenheit y Kelvin
+
+![App Screenshot](demo_img/conversor%20temperatura.jpg)
+![App Screenshot](demo_img/conversor%20temperatura%20ejemplo%202.jpg)
+
+
+
+## Screenshots
+
+![App Screenshot](demo_img/conversor%20moneda%20ejemplo%202.jpg)
+![App Screenshot](demo_img/conversor%20temperatura%20ejemplo.jpg)
+![App Screenshot](demo_img/conversor%20error.jpg)
+![App Screenshot](demo_img/error-conexion.png)
+
+
+## Autor
+
+- [@octokatherine](https://www.github.com/robertrengel)
+
